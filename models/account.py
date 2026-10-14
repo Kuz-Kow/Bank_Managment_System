@@ -1,14 +1,14 @@
-from transaction import Transaction
+from models.transaction import Transaction
+from utils.money import Money 
     
 
-class Bank_Account:
+class Account:
 
     _ID : int = 0
     
     def __init__(self):
         self._ID +=1
-        self.account_id : str = "ACC" + f"{self._ID:3d}"
-        self.__balance : float = 0
+        self.__balance : float = Money(0, "PLN")
         self._transactions : list[Transaction] = []
         
     @property    
