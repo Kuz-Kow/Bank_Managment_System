@@ -17,17 +17,26 @@ TAGS = {
 }
 
 
-class Database(TypedDict):
+class DataBase(TypedDict):
     accounts : dict[str , bank_account.Bank_Account]
     categories : list[Category]
     transactions : list[Transaction]
     budgets : list[Budget]
     
-
-
-def load_db(path : Path) -> Database:
     
-    database : Database = {
+class JSON_DataBase(TypedDict):
+    accounts: dict[str, dict[str, str | int]]
+    categories : list[dict[str,str]]
+    transactions : list[dict[str,str]]
+    budgets : list[dict[str,str]]
+    
+    
+    
+
+
+def load_db() -> DataBase:
+    
+    database : DataBase = {
                 "accounts" : {},
                 "categories" : [],
                 "transactions" : [],
@@ -36,7 +45,7 @@ def load_db(path : Path) -> Database:
     
     if DB_PATH.is_file():
         with DB_PATH.open("r", encoding= "utf-8") as file:
-            data = json.load(file)
+            data : JSON_DataBase = json.load(file)
             
 
             for account in data["accounts"]:
@@ -60,3 +69,21 @@ def load_db(path : Path) -> Database:
 
         
     return database
+
+
+
+def save_db(data : DataBase) -> None:
+    
+    json_data : JSON_DataBase = {
+        "accounts" : {},
+        "categories" : [],
+        "transactions" : [],
+        "budgets" : []
+    }
+    
+    with DB_PATH.open("r", encoding= "utf-8") as save_file:
+        for account in data["accounts"]:
+            name, bank_record = account.values()
+            json_data["accounts"][name] = bank_record.get_keys()
+        
+            
