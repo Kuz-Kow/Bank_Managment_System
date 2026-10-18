@@ -8,3 +8,12 @@ class Budget:
     limit_amount : Decimal
     spent_amount : Decimal
     period : str
+    
+    
+    def save_data(self) -> dict:
+        return {
+            "category" : self.category.save_data(),
+            "limit_amount" : self.limit_amount,
+            "spent_amount" : self.spent_amount,
+            "period" : self.period
+        }

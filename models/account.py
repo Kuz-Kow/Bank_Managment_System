@@ -1,19 +1,24 @@
 from models.transaction import Transaction
 from utils.money import Money 
-    
+
 
 class Account:
 
     _ID : int = 0
     
-    def __init__(self):
+    def __init__(self, balance : dict[str, int | str]):
         self._ID +=1
-        self.__balance : float = Money(0, "PLN")
-        self._transactions : list[Transaction] = []
+        
+        if balance:
+            self.__balance : float = Money(balance["amount"], balance["currency"])
+        else:
+            self.__balance : float = Money(0, "PLN")
+            
         
     @property    
     def balance(self):
-        return self.__balance
+        return {"amount" : self.__balance.amount, 
+                "currency" : self.__balance.currency}
     
     @balance.setter
     def balance(self, amount):
@@ -28,7 +33,7 @@ class Account:
         if not amount > 0:
             raise ValueError("Can't deposit negative amount or zero!")
         
-        self.__balance += amount
+        self.__balance += amount 
         
     
     def withdraw(self, amount : int):
@@ -40,5 +45,8 @@ class Account:
         
         
         self.__balance -= amount
+        
+
+        
         
     

@@ -21,6 +21,6 @@ def create_account(db : Database, name : Annotated[str, "Name of the account", [
             exit("Account with this name is alredy exists")
             
             
-    db["accounts"][name] = {"account" : match_account_type[account_type]()}
+    db["accounts"][name] = match_account_type[account_type]()
     
     ...
