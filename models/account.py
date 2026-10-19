@@ -20,8 +20,7 @@ class Account:
     @property    
     def balance(self) -> dict[str, int | str]:
         """Return the balance as an amount and currency mapping."""
-        return {"amount" : self.__balance.amount, 
-                "currency" : self.__balance.currency}
+        return self.__balance
     
     @balance.setter
     def balance(self, amount):
@@ -55,7 +54,7 @@ class Account:
 
     def get_keys(self) -> dict[str, object]:
         """Return the account fields used for JSON serialization."""
-        return {"ID": self.account_id, "balance": self.balance}
+        return {"ID": self.account_id, "balance": {"amount": self.__balance.amount, "currency": self.__balance.currency}}
 
     def __str__(self) -> str:
         """Return a readable representation of the account and its balance."""
