@@ -143,7 +143,7 @@ def save_db(data : DataBase) -> None:
     for budget in data["budgets"]:
         json_data["budgets"].append(budget.save_data())
 
-    serialized_data = json.dumps(json_data)
+    serialized_data = json.dumps(json_data, indent=4, ensure_ascii=False)
     temporary_path: Path | None = None
     try:
         with tempfile.NamedTemporaryFile(
